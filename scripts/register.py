@@ -1,7 +1,7 @@
 from benchmark import CentroidDistScore, calculate_ncc
 from deepreg.predict import unwrapped_predict
 from tqdm import tqdm
-from utils import write_to_json
+from network_utils import write_to_json
 import deepreg.model.layer as layer
 import h5py
 import numpy as np
