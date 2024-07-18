@@ -26,6 +26,7 @@ dataset:
     dir:
       - "prj_register/train/nonaugmented/2022-01-17-01"
       - "prj_register/train/nonaugmented/2023-07-28-04"
+      - "prj_register/train/nonaugmented/2023-08-19-08"
       - "prj_register/train/nonaugmented/2023-01-06-01"
       - "prj_register/train/nonaugmented/2023-01-19-22"
       - "prj_register/train/nonaugmented/2023-08-18-11"
@@ -34,6 +35,7 @@ dataset:
       - "prj_register/train/nonaugmented/2022-12-21-06"
       - "prj_register/train/nonaugmented/2023-01-05-01"
       - "prj_register/train/nonaugmented/2022-07-26-01"
+      - "prj_register/train/nonaugmented/2023-07-11-10"
       - "prj_register/train/nonaugmented/2023-08-22-08"
       - "prj_register/train/nonaugmented/2022-06-28-07"
       - "prj_register/train/nonaugmented/2023-06-24-02"
@@ -57,9 +59,11 @@ dataset:
       - "prj_register/train/nonaugmented/2023-06-24-28"
       - "prj_register/train/nonaugmented/2023-06-09-10"
       - "prj_register/train/nonaugmented/2023-09-15-08"
+      - "prj_register/train/nonaugmented/2023-08-07-01"
       - "prj_register/train/nonaugmented/2023-01-19-08"
       - "prj_register/train/nonaugmented/2022-03-15-04"
       - "prj_register/train/nonaugmented/2022-06-28-01"
+      - "prj_register/train/nonaugmented/2023-08-17-08"
       - "prj_register/train/nonaugmented/2022-02-16-04"
       - "prj_register/train/nonaugmented/2023-07-07-01"
       - "prj_register/train/nonaugmented/2023-08-07-16"
@@ -68,11 +72,13 @@ dataset:
       - "prj_register/train/nonaugmented/2022-03-22-01"
       - "prj_register/train/nonaugmented/2022-06-14-01"
       - "prj_register/train/nonaugmented/2023-07-07-18"
+      - "prj_register/train/nonaugmented/2023-07-06-01"
       - "prj_register/train/nonaugmented/2023-01-19-15"
       - "prj_register/train/nonaugmented/2022-04-18-04"
       - "prj_register/train/nonaugmented/2022-07-15-12"
       - "prj_register/train/nonaugmented/2023-01-23-15"
       - "prj_register/train/nonaugmented/2023-07-13-01"
+      - "prj_register/train/nonaugmented/2023-08-17-01"
       - "prj_register/train/nonaugmented/2023-07-12-01"
       - "prj_register/train/nonaugmented/2023-01-19-01"
     format: "h5"
@@ -123,18 +129,6 @@ train:
     label:
       name: "centroid"
       weight: 0.1
-    regularization:
-      hybrid: true
-      img_size:
-      - 284
-      - 120
-      - 64
-      name: "hybrid"
-      weight:
-        "axisdiff": 0.001
-        "gradient": 0.02
-        "nonrigid": 0.02
-        "diff": 0.005
   method: "ddf"
   optimizer:
     learning_rate: 0.0001
@@ -143,7 +137,7 @@ train:
     batch_size: 8
     data_augmentation:
       name: "centroid_affine"
-      moving_label_size:
+      moving_label_size: 
         - 200
         - 3
       fixed_label_size:

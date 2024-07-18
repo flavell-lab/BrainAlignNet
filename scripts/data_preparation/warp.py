@@ -1,7 +1,7 @@
+from data_utils import (locate_dataset, get_cropped_image, get_image_T)
 from euler_gpu.preprocess import initialize
 from euler_gpu.transform import transform_image_3d
 from typing import Dict, List, Optional, Tuple, Union, Any
-from utils import (locate_dataset, get_cropped_image, get_image_T)
 import deepreg.model.layer as layer
 import json
 import nibabel as nib
