@@ -7,6 +7,15 @@ import deepreg.train as train
 import tensorflow as tf
 
 
+def set_GPU(device):
+    gpus = tf.config.list_physical_devices('GPU')
+    if gpus:
+        try:
+            tf.config.set_visible_devices(gpus[device], 'GPU')
+        except RuntimeError as e:
+            print(e)
+
+
 def fit_deepreg(
         config_path: str,
         log_dir: str,
