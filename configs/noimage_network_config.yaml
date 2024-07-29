@@ -136,7 +136,8 @@ train:
       - 120
       - 64
       name: "hybrid"
-      weight:
+      weight: 1
+      hybrid_weight:
         "axisdiff": 0.001
         "gradient": 0.02
         "nonrigid": 0.02
@@ -158,3 +159,4 @@ train:
     num_parallel_calls: -1
     shuffle_buffer_num_batch: 4
   save_period: 1
+  single_channel: True
