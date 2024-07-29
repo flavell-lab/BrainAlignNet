@@ -2,6 +2,7 @@ from deepreg.callback import build_checkpoint_callback
 from deepreg.registry import REGISTRY
 from deepreg.util import build_dataset
 import deepreg.model.optimizer as opt
+import deepreg.train as train
 import tensorflow as tf
 
 
