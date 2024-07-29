@@ -120,7 +120,7 @@ train:
     - 3
     name: "local"
     num_channel_initial: 16
-  epochs: 500
+  epochs: 1000
   loss:
     image:
       kernel_size: 16
@@ -136,7 +136,8 @@ train:
       - 120
       - 64
       name: "hybrid"
-      weight:
+      weight: 1
+      hybrid_weight:
         "axisdiff": 0.005
         "gradient": 0.0
         "nonrigid": 0.05
@@ -146,7 +147,7 @@ train:
     learning_rate: 0.0001
     name: "Adam"
   preprocess:
-    batch_size: 8
+    batch_size: 4
     data_augmentation:
       name: "centroid_affine"
       moving_label_size: 
@@ -158,3 +159,4 @@ train:
     num_parallel_calls: -1
     shuffle_buffer_num_batch: 4
   save_period: 1
+  single_channel: True
