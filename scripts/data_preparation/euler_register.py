@@ -2,11 +2,10 @@ from euler_gpu.grid_search import grid_search
 from euler_gpu.preprocess import (initialize,
     max_intensity_projection_and_downsample)
 from euler_gpu.transform import (transform_image_3d, translate_along_z)
-from numpy.typing import Callable
-from tqdm import tqdm
-from typing import Dict, List, Tuple
 from evaluate import calculate_gncc
-from utils import (write_to_json, locate_dataset, filter_and_crop,
+from tqdm import tqdm
+from typing import Dict, List, Tuple, Callable
+from data_utils import (write_to_json, locate_dataset, filter_and_crop,
         get_image_T, get_image_CM, filter_image)
 import glob
 import h5py
@@ -130,14 +129,16 @@ class EulerRegistrationProcessor:
                 augmentation. Default is False.
 
         Example:
-            >>> processor = RegistrationProcessor(
-            >>>     (280, 120, 64),
-            >>>     "datasets",
+            >>> processor = EulerRegistrationProcessor(
+            >>>     (284, 120, 64),
+            >>>     save_directory="/data/prj_register",
+            >>>     problem_file="/data/registration_problems.json"
+            >>>     euler_search=True,
             >>>     device_name="cuda:0"
             >>> )
             >>> processor.process_datasets() """
 
-        with open(f"resources/{self.problem_file}.json", 'r') as f:
+        with open(self.problem_file, 'r') as f:
             problem_dicts = json.load(f)
 
         for dataset_type, problem_dict in problem_dicts.items():
@@ -171,13 +172,12 @@ class EulerRegistrationProcessor:
                 problems,
                 f"{dataset_type_dir}/nonaugmented"
             )
-            tag = self.problem_file.split("_")[-1]
 
             if self.euler_search:
-                write_to_json(self.outcomes, f"eulergpu_outcomes_{tag}")
-                write_to_json(self.CM_dict, f"center_of_mass_{tag}")
+                write_to_json(self.outcomes, f"eulergpu_outcomes")
+                write_to_json(self.CM_dict, f"center_of_mass")
                 write_to_json(self.euler_parameters_dict,
-                              f"euler_parameters_{tag}")
+                              f"euler_parameters")
 
     def process_dataset(
         self,
@@ -194,7 +194,6 @@ class EulerRegistrationProcessor:
         save_path = f"{dataset_type_dir}/{dataset_name}"
         self._ensure_directory_exists(save_path)
         dataset_path = locate_dataset(dataset_name)
-        tag = self.problem_file.split("_")[-1]
 
         with h5py.File(f'{save_path}/moving_images.h5', 'w') as hdf5_m_file, \
             h5py.File(f'{save_path}/fixed_images.h5', 'w') as hdf5_f_file:
@@ -210,18 +209,18 @@ class EulerRegistrationProcessor:
                 if len(processed_image_dict) != 0:
                     hdf5_f_file.create_dataset(
                         problem,
-                        data = processed_image_dict["fixed_image"]
-                    )
+                        data = processed_image_dict["fixed_image"])
+
                     hdf5_m_file.create_dataset(
                         problem,
-                        data = processed_image_dict["moving_image"]
-                    )
+                        data = processed_image_dict["moving_image"])
                     if self.euler_search:
                         write_to_json(self.outcomes,
-                                f"eulergpu_outcomes_{tag}")
-                        write_to_json(self.CM_dict, f"center_of_mass_{tag}")
+                                f"eulergpu_outcomes")
+
+                        write_to_json(self.CM_dict, f"center_of_mass")
                         write_to_json(self.euler_parameters_dict,
-                                      f"euler_parameters_{tag}")
+                                      f"euler_parameters")
 
     def process_problem(
         self,
