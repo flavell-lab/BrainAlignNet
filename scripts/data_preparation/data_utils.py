@@ -68,7 +68,7 @@ def locate_dataset(dataset_name: str):
 
     neuropal_dir = "/data1/prj_neuropal/data_processed"
     kfc_dir = "/data1/prj_kfc/data_processed"
-    rim_dir = "/data3/prj_rim/data_processed"
+    rim_dir = "/store1/prj_rim/data_processed"
 
     dir_dataset_dict = {
         neuropal_dir: os.listdir(neuropal_dir),

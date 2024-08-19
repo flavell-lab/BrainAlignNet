@@ -10,7 +10,7 @@ import numpy as np
 import os
 
 
-class LabelWarper(ImageWarper):
+class ROIWarper(ImageWarper):
 
     def __init__(self, *args, **kwargs):
 
@@ -43,7 +43,7 @@ class LabelWarper(ImageWarper):
         self,
         simply_crop: bool,
     ) -> Dict[str, np.ndarray]:
-        """ Redefine this method for LabelWarper. """
+        """ Redefine this method for ROIWarper. """
 
         roi_path = \
             f"{self.label_path}/{self.dataset_name}/register_labels/{self.registration_problem}"
@@ -100,7 +100,7 @@ class LabelWarper(ImageWarper):
             return True
 
 
-def generate_labels(
+def generate_rois(
         device_name: str,
         target_image_shape: Tuple[int, int, int],
         problem_file: str,
@@ -108,7 +108,7 @@ def generate_labels(
         simply_crop: bool,
     ):
 
-    warper = LabelWarper(
+    warper = ROIWarper(
         None,  # dataset_name and registration_problem are set later
         None,
         target_image_shape,
@@ -117,8 +117,9 @@ def generate_labels(
         simply_crop, # default set to False in warp.ImageWarper
     )
 
-    with open(f"resources/{problem_file}.json", "r") as f:
+    with open(problem_file, "r") as f:
         problem_dict = json.load(f)
+
     dataset_types = {
         "train": list(problem_dict["train"].keys()),
         "valid": list(problem_dict["valid"].keys()),
@@ -126,7 +127,7 @@ def generate_labels(
     }
     all_bad_problems = {"train": {}, "valid": {}, "test": {}}
     for dataset_type, datasets in dataset_types.items():
-        all_bad_problems[dataset_type] = generate_label(
+        all_bad_problems[dataset_type] = generate_roi(
                 datasets,
                 dataset_type,
                 warper,
@@ -134,13 +135,13 @@ def generate_labels(
                 problem_dict,
                 simply_crop
         )
-    tag = problem_file.split("_")[-1]
-    write_to_json(all_bad_problems, f"bad_registration_problems_{tag}")
+    write_to_json(all_bad_problems, f"bad_registration_problems")
 
-def generate_label(
+
+def generate_roi(
         datasets: List[str],
         dataset_type: str,
-        warper: LabelWarper,
+        warper: ROIWarper,
         save_directory: str,
         problem_dict: Dict[str, Dict[str, List[str]]],
         simply_crop: bool,
@@ -149,6 +150,10 @@ def generate_label(
 
     for dataset in datasets:
         label_path = f"{save_directory}/{dataset_type}/nonaugmented/{dataset}"
+
+        if not os.path.exists(label_path):
+            os.makedirs(label_path)
+
         problems = problem_dict[dataset_type][dataset]
         warper.dataset_name = dataset
 

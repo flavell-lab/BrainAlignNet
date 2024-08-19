@@ -10,7 +10,7 @@ import numpy as np
 import torch
 
 
-class RFPImageWarper(EulerRegistrationProcessor):
+class FPImageWarper(EulerRegistrationProcessor):
 
     def __init__(self, *args, **kwargs):
 
@@ -30,7 +30,7 @@ class RFPImageWarper(EulerRegistrationProcessor):
 
     def process_datasets(self, augment: bool = False):
 
-        with open("resources/registration_problems.json", 'r') as f:
+        with open(self.problem_file, 'r') as f:
             registration_problem_dict = json.load(f)
 
         for dataset_type, problem_dict in registration_problem_dict.items():
