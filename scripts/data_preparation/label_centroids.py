@@ -24,10 +24,7 @@ class CentroidLabel:
             self.create_one_dataset_labels(dataset_name, "train")
         for dataset_name in valid_dataset_names:
             self.create_one_dataset_labels(dataset_name, "valid")
-        """
-        for dataset_name in ["2023-01-17-07", "2023-01-18-01"]:
-            self.create_one_dataset_labels(dataset_name, "test")
-        """
+
     def create_one_dataset_labels(
         self,
         dataset_name: str,
@@ -121,11 +118,4 @@ class CentroidLabel:
                 centroids[val-1] = [centroid_x, centroid_y, centroid_z]
 
         return centroids
-
-
-if __name__ == "__main__":
-
-    dataset_path = "/data3/prj_register/ALv3"
-    centroid_labeler = CentroidLabel(dataset_path)
-    centroid_labeler.create_all_labels()
 
