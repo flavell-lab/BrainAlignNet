@@ -40,7 +40,7 @@ class ImageWarper:
         self._registration_problem = registration_problem
         self.image_shape = image_shape
         self.device = torch.device(device_name)
-        tag = problem_file.split("_")[-1]
+        tag = problem_file.split(".")[0].split("_")[-1]
         if simply_crop:
             self.CM_dict = self._load_json(
                     f"resources/center_of_mass_{tag}.json")
@@ -49,8 +49,6 @@ class ImageWarper:
                     f"resources/center_of_mass_{tag}.json")
             self.euler_parameters_dict = self._load_json(
                     f"resources/euler_parameters_{tag}.json")
-            self.pairnum_dict = self._load_json(
-                    "resources/problem_to_pairnum_ALv1.json")
 
         # if `dataset_name` and `registration_problem` are both provided
         # update `problem_id` and the corresponding pair number
@@ -73,7 +71,6 @@ class ImageWarper:
 
     def _update_problem(self):
         self.problem_id = f"{self.dataset_name}/{self._registration_problem}"
-        self.pair_num = self.pairnum_dict[self.problem_id]
 
     def get_deepreg_outputs(
         self,
