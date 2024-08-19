@@ -62,6 +62,7 @@ def register(
 
     centroid_distance = dict()
     ncc_scores = dict()
+    registered = {}
 
     with open(model_config_path, "r") as f:
         dataset_dirs = yaml.safe_load(f)["dataset"][dataset_type]["dir"]
@@ -72,6 +73,7 @@ def register(
 
         centroid_distance[dataset_name] = dict()
         ncc_scores[dataset_name] = dict()
+        registered[dataset_name] = dict()
 
         problems = list(h5py.File(f"{dataset_dir}/fixed_images.h5", "r").keys())[:100]
 
@@ -118,8 +120,17 @@ def register(
                 pred_fixed_image.squeeze(),
                 batched_fixed_image.numpy().squeeze()
             )
+            registered[dataset_name][problem] = {}
+            registered[dataset_name][problem]["warped_moving_image"] = pred_fixed_image.squeeze()
+            registered[dataset_name][problem]["warped_moving_roi"] = warped_moving_roi
+            warped_moving_centroids = warped_moving_centroids.numpy().squeeze(0)
+            registered[dataset_name][problem]["warped_moving_centroids"] = warped_moving_centroids
+
+    if write_scores:
         write_to_json(centroid_distance, f"centroid_distances", "scores")
         write_to_json(ncc_scores, f"ncc_scores", "scores")
+
+    return registered
 
 
 def compute_centroid_labels(image, max_centroids = 200):
@@ -153,13 +164,3 @@ def normalize_batched_image(batched_image, eps=1e-7):
 
     return batched_image
 
-experiment = "2024-03-30-train"
-model_ckpt_path = \
-f"/data3/prj_register/{experiment}/centroid_labels_augmented_batched_hybrid/save/ckpt-300"
-model_config_path = f"/data3/prj_register/{experiment}/config_batch.yaml"
-#output_dir = "/data3/prj_register/2024-02-15_debug"
-set_GPU(3)
-register(
-    model_config_path,
-    model_ckpt_path,
-)
