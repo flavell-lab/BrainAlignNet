@@ -1,0 +1,81 @@
+dataset:
+  fixed_image_shape:
+  - 284
+  - 120
+  - 64
+  fixed_label_shape:
+  - 200
+  - 3
+  moving_image_shape:
+  - 284
+  - 120
+  - 64
+  moving_label_shape:
+  - 200
+  - 3
+  test:
+    dir:
+    - /home/alicia/notebook/alicia/BrainAlignNet/demo_notebook/demo_data/test
+    format: h5
+    labeled: false
+  train:
+    dir:
+    - /home/alicia/notebook/alicia/BrainAlignNet/demo_notebook/demo_data/train
+    format: h5
+    labeled: true
+  type: paired
+  valid:
+    dir:
+    - /home/alicia/notebook/alicia/BrainAlignNet/demo_notebook/demo_data/valid
+    format: h5
+    labeled: true
+    sample_label: all
+train:
+  backbone:
+    extract_levels:
+    - 0
+    - 1
+    - 2
+    - 3
+    name: local
+    num_channel_initial: 16
+  epochs: 2
+  loss:
+    image:
+      kernel_size: 16
+      name: lncc
+      weight: 1
+    label:
+      name: centroid
+      weight: 0.1
+    regularization:
+      hybrid: true
+      hybrid_weight:
+        axisdiff: 0.001
+        diff: 0.005
+        gradient: 0.02
+        nonrigid: 0.02
+      img_size:
+      - 284
+      - 120
+      - 64
+      name: hybrid
+      weight: 1
+  method: ddf
+  optimizer:
+    learning_rate: 0.0001
+    name: Adam
+  preprocess:
+    batch_size: 8
+    data_augmentation:
+      fixed_label_size:
+      - 200
+      - 3
+      moving_label_size:
+      - 200
+      - 3
+      name: centroid_affine
+    num_parallel_calls: -1
+    shuffle_buffer_num_batch: 4
+  save_period: 1
+  single_channel: true
