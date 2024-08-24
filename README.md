@@ -24,13 +24,13 @@ BrainAlignNet runs on two other packages: `DeepReg` and `euler_gpu`, which need 
 
 `DeepReg` is a deep learning toolkit for image registration. BrainAlignNet uses a [custom version of `DeepReg`](https://github.com/flavell-lab/DeepReg) with a novel network objective.
 
-Clone or download our custom DeepReg; then run `git install .` at its root directory to install the package.
+Clone or download our custom DeepReg; then run `pip install .` at its root directory to install the package.
 
 ### euler_gpu
 
 `euler_gpu` is a GPU-accelerated implementation of Euler registration using pytorch.
 
-Clone or download [`euler_gpu`](https://github.com/flavell-lab/euler_gpu) and run `git install .` at the root directory.
+Clone or download [`euler_gpu`](https://github.com/flavell-lab/euler_gpu) and run `pip install .` at the root directory.
 
 ## data preparation
 
