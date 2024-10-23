@@ -286,3 +286,23 @@ class Sampler:
                         problems, int(0.5 * len(problems)))
 
         return sampled_problems
+
+
+def main():
+
+    train_datasets = ['2023-06-24-28', '2022-04-18-04', '2022-06-14-07',
+                      '2022-02-08-04']
+    valid_datasets = ['2023-08-23-23', '2022-04-12-04', '2023-09-02-10',
+                      '2023-01-06-08']
+    test_datasets = ['2022-04-14-04', '2023-01-16-15', '2023-01-16-22', '2023-01-17-07']
+    dataset_dict = {
+        "train": train_datasets,
+        "valid": valid_datasets,
+        "test": test_datasets}
+
+    sampler = Sampler(dataset_dict, diy_registration_problems=False)
+    sampler("registration_problems_demo", num_problems=5)
+
+
+if __name__ == "__main__":
+    main()
