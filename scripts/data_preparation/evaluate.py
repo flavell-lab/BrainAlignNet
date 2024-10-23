@@ -26,5 +26,3 @@ def calculate_ncc(fixed, moving):
     denominator = np.sqrt(np.sum(fixed_new ** 2) * np.sum(moving_new ** 2))
 
     return numerator / denominator
-
-
