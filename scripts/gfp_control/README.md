@@ -16,6 +16,8 @@ The script `run_gfp_control.py` takes as input the tag for one of the four datas
 
 ## try it out
 ```python
+from run_gfp_control import register_all_swf360_problems
+
 dataset = 'ALv4'
 model_ckpt_path = '/data3/prj_register/full_network/save/ckpt-287'
 model_config_path = '/data3/prj_register/full_network/config.yaml'
