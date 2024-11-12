@@ -14,4 +14,16 @@ The script `run_gfp_control.py` takes as input the tag for one of the four datas
 - Model checkpoints for all network versions can be found on [Dropbox](https://www.dropbox.com/scl/fo/ealblchspq427pfmhtg7h/AKpI9DpPLYjQZ-lkDhI2zYk/BrainAlignNet/model_weights?dl=0&rlkey=1e6tseyuwd04rbj7wmn2n6ij7&subfolder_nav_tracking=1).
 - Model configuration files for all network versions can be found on [GitHub](https://github.com/flavell-lab/BrainAlignNet/tree/main/configs).
 
-
+## try it out
+```python
+dataset = 'ALv4'
+model_ckpt_path = '/data3/prj_register/full_network/save/ckpt-287'
+model_config_path = '/data3/prj_register/full_network/config.yaml'
+set_GPU(2)
+register_all_swf360_problems(
+    dataset,
+    model_ckpt_path,
+    model_config_path,
+    network_version='full'
+)
+```

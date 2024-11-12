@@ -9,7 +9,7 @@ import os
 import tensorflow as tf
 
 
-def set_GPU(device):
+def set_GPU(device: int):
     gpus = tf.config.list_physical_devices('GPU')
     if gpus:
         try:
@@ -19,10 +19,10 @@ def set_GPU(device):
 
 
 def register_all_swf360_problems(
-    experiments,
-    dataset,
-    model_ckpt_path,
-    model_config_path,
+    dataset: str,
+    model_ckpt_path: str,
+    model_config_path: str,
+    network_version: str,
 ):
     dataset_names = {
         "ALv4": "2022-01-06-01",
@@ -51,41 +51,32 @@ def register_all_swf360_problems(
             {experiment} ch2 NCC: {'{:.2f}'.format(outputs_dict['ch2']['ncc'])}"""
         )
 
-    experiment_to_network_version = {
-            "2024-01-30-train": "full",
-            "2024-03-08-train": "nolabel",
-            "2024-03-15-train-2I": "noreg",
-            "2024-05-02-train": "noimage"
-        }
     ncc_scores_dict = dict()
     problems = get_swf360_problems(dataset)
 
     for problem in tqdm(problems[:5]):
 
         ncc_scores_dict[problem] = {}
-
-        for experiment in experiments:
-            network_version = experiment_to_network_version[experiment]
-            network_outputs = register_single_image_pair(
-                dataset,
-                problem,
-                target_image_shape,
-                target_label_shape,
-                model_ckpt_path,
-                model_config_path,
-                output_dir
-            )
-            ncc_scores_dict[problem][network_version] = [
-                network_outputs["ch1"]["ncc"],
-                network_outputs["ch2"]["ncc"]
-            ]
-            #_print_score(full_experiment, full_network_outputs)
-            #_print_score(control_experiment, control_network_outputs)
-        write_to_json(
-            ncc_scores_dict,
-            f"{dataset}_ncc_{network_version}",
-            "scores"
+        network_outputs = register_single_image_pair(
+            dataset,
+            problem,
+            target_image_shape,
+            target_label_shape,
+            model_ckpt_path,
+            model_config_path,
+            output_dir
         )
+        ncc_scores_dict[problem][network_version] = [
+            network_outputs["ch1"]["ncc"],
+            network_outputs["ch2"]["ncc"]
+        ]
+        #_print_score(full_experiment, full_network_outputs)
+        #_print_score(control_experiment, control_network_outputs)
+    write_to_json(
+        ncc_scores_dict,
+        f"{dataset}_ncc_{network_version}",
+        "scores"
+    )
 
 
 def register_single_image_pair(
@@ -114,10 +105,10 @@ def register_single_image_pair(
 
         batched_fixed_image = normalize_batched_image(
             np.expand_dims(fixed_image, axis=0)
-            )
+        )
         batched_moving_image = normalize_batched_image(
             np.expand_dims(moving_image, axis=0)
-            )
+        )
         if batched_moving_image.dtype == np.float32:
 
             ddf_output, pred_fixed_image, model = unwrapped_predict(
@@ -129,15 +120,15 @@ def register_single_image_pair(
                 model = None,
                 model_ckpt_path = model_ckpt_path,
                 model_config_path = model_config_path,
-                )
+            )
             raw_ncc = calculate_ncc(
                 batched_moving_image.numpy().squeeze(),
                 batched_fixed_image.numpy().squeeze()
-                )
+            )
             ncc = calculate_ncc(
                 pred_fixed_image.squeeze(),
                 batched_fixed_image.numpy().squeeze()
-                )
+            )
 
         return {
                 "fixed_image": batched_fixed_image.numpy().squeeze(),
@@ -146,7 +137,7 @@ def register_single_image_pair(
                 "raw_ncc": raw_ncc,
                 "ncc": ncc,
                 "ddf": ddf_output
-                }
+            }
 
     def _warp_ch1_with_ddf(problem, ch2_ddf, fixed_image, moving_image):
 
@@ -186,7 +177,7 @@ def register_single_image_pair(
             all_outputs["ch2"]["ddf"],
             ch1_fixed_image,
             ch1_moving_image
-            )
+        )
 
     return all_outputs
 
@@ -267,30 +258,3 @@ def compute_centroid_labels(image, max_centroids = 200):
             centroids[val-1] = [centroid_x, centroid_y, centroid_z]
 
     return centroids
-
-
-if __name__ == "__main__":
-
-    ### testing registering single SWF360 problem
-    # dataset = 'ALv4'
-    # problem = '101to145'
-    # target_image_shape = (284, 120, 64)
-    # target_label_shape = (200, 3)
-    # model_ckpt_path = \
-    # '/data3/prj_register/2024-01-30-train/centroid_labels_augmented_batched_hybrid/save/ckpt-287'
-    # model_config_path = '/data3/prj_register/2024-01-30-train/config_batch.yaml'
-    # output_dir = 'outputs'
-    # set_GPU(2)
-    # output = register_single_image_pair(
-    #     dataset, problem, target_image_shape, target_label_shape, model_ckpt_path,
-    #     model_config_path, output_dir
-    # )
-    # print(output)
-    ### testing registering all SWF360 problems
-    experiments = ['2024-03-08-train']
-    dataset = 'ALv4'
-    model_ckpt_path = '/data3/prj_register/2024-03-08-train/centroid_labels_augmented_batched_hybrid/save/ckpt-287'
-    model_config_path = '/data3/prj_register/2024-03-08-train/config_batch.yaml'
-    set_GPU(2)
-    register_all_swf360_problems(experiments, dataset, model_ckpt_path,
-                                 model_config_path)
