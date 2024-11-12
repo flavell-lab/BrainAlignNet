@@ -10,7 +10,7 @@ The script `run_gfp_control.py` takes as input the tag for one of the four datas
 
 ## find shared content
 - All four datasets are shared on [Dropbox](https://www.dropbox.com/scl/fo/ealblchspq427pfmhtg7h/ABsPot7GnBiu04Xi-eKyJds/BrainAlignNet/GFP_data?dl=0&rlkey=1e6tseyuwd04rbj7wmn2n6ij7&subfolder_nav_tracking=1).
-- All registration problems sampled from each of the four datasets can be found under the resource folder.
+- All registration problems sampled from each of the four datasets can be found under the folder `resources`.
 - Model checkpoints for all network versions can be found on [Dropbox](https://www.dropbox.com/scl/fo/ealblchspq427pfmhtg7h/AKpI9DpPLYjQZ-lkDhI2zYk/BrainAlignNet/model_weights?dl=0&rlkey=1e6tseyuwd04rbj7wmn2n6ij7&subfolder_nav_tracking=1).
 - Model configuration files for all network versions can be found on [GitHub](https://github.com/flavell-lab/BrainAlignNet/tree/main/configs).
 
