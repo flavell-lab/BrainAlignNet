@@ -62,6 +62,8 @@ class EulerRegistrationProcessor:
                     self._initialize_memory_dict()
 
         self._ensure_directory_exists(self.save_directory)
+        self.tag = problem_file.split(".")[0].split("_")[-1]
+
 
     def _ensure_directory_exists(self, path):
         """ Create the given directory if it does not already exist. """
@@ -174,10 +176,10 @@ class EulerRegistrationProcessor:
             )
 
             if self.euler_search:
-                write_to_json(self.outcomes, f"eulergpu_outcomes")
-                write_to_json(self.CM_dict, f"center_of_mass")
+                write_to_json(self.outcomes, f"eulergpu_outcomes_{self.tag}")
+                write_to_json(self.CM_dict, f"center_of_mass_{self.tag}")
                 write_to_json(self.euler_parameters_dict,
-                              f"euler_parameters")
+                              f"euler_parameters_{self.tag}")
 
     def process_dataset(
         self,
@@ -216,11 +218,11 @@ class EulerRegistrationProcessor:
                         data = processed_image_dict["moving_image"])
                     if self.euler_search:
                         write_to_json(self.outcomes,
-                                f"eulergpu_outcomes")
+                                f"eulergpu_outcomes_{self.tag}")
 
-                        write_to_json(self.CM_dict, f"center_of_mass")
+                        write_to_json(self.CM_dict, f"center_of_mass_{self.tag}")
                         write_to_json(self.euler_parameters_dict,
-                                      f"euler_parameters")
+                                      f"euler_parameters_{self.tag}")
 
     def process_problem(
         self,

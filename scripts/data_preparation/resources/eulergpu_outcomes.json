@@ -1,0 +1,38 @@
+{
+    "2022-01-17-01/1391to1404": {
+        "registered_image_xy_gncc": 0.8935511708259583,
+        "registered_image_yz_gncc": 0.9065906797274419,
+        "registered_image_xz_gncc": 0.9267493700531421,
+        "registered_image_xyz_gncc": 0.8396873733962168
+    },
+    "2022-01-17-01/465to1589": {
+        "registered_image_xy_gncc": 0.8797162771224976,
+        "registered_image_yz_gncc": 0.8674060106277466,
+        "registered_image_xz_gncc": 0.8344119191169739,
+        "registered_image_xyz_gncc": 0.7273229956626892
+    },
+    "2022-01-17-01/425to1484": {
+        "registered_image_xy_gncc": 0.8784039616584778,
+        "registered_image_yz_gncc": 0.7652775049209595,
+        "registered_image_xz_gncc": 0.7804997563362122,
+        "registered_image_xyz_gncc": 0.6803770661354065
+    },
+    "2022-01-17-01/1259to1318": {
+        "registered_image_xy_gncc": 0.7805203199386597,
+        "registered_image_yz_gncc": 0.7868268489837646,
+        "registered_image_xz_gncc": 0.6264345049858093,
+        "registered_image_xyz_gncc": 0.5182647109031677
+    },
+    "2022-01-17-01/420to998": {
+        "registered_image_xy_gncc": 0.8430314064025879,
+        "registered_image_yz_gncc": 0.8640177845954895,
+        "registered_image_xz_gncc": 0.8757655024528503,
+        "registered_image_xyz_gncc": 0.7210388779640198
+    },
+    "2023-07-28-04/13to240": {
+        "registered_image_xy_gncc": 0.7634960412979126,
+        "registered_image_yz_gncc": 0.7499305535588703,
+        "registered_image_xz_gncc": 0.6076292647293134,
+        "registered_image_xyz_gncc": 0.4789417116184178
+    }
+}

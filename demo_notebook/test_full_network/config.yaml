@@ -15,18 +15,18 @@ dataset:
   - 3
   test:
     dir:
-    - /home/alicia/notebook/alicia/BrainAlignNet/demo_notebook/demo_data/test
+    - /scratch/nar8991/computer_vision/data/Atanas_processed/test
     format: h5
     labeled: false
   train:
     dir:
-    - /home/alicia/notebook/alicia/BrainAlignNet/demo_notebook/demo_data/train
+    - /scratch/nar8991/computer_vision/data/Atanas_processed/train
     format: h5
     labeled: true
   type: paired
   valid:
     dir:
-    - /home/alicia/notebook/alicia/BrainAlignNet/demo_notebook/demo_data/valid
+    - /scratch/nar8991/computer_vision/data/Atanas_processed/valid
     format: h5
     labeled: true
     sample_label: all

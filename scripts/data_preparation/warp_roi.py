@@ -15,7 +15,7 @@ class ROIWarper(ImageWarper):
     def __init__(self, *args, **kwargs):
 
         super().__init__(None, *args, **kwargs)
-        self.label_path = "/data1/prj_register/deepreg_labels"
+        self.label_path = "/scratch/nar8991/computer_vision/data"
         self.bad_labels = []
 
     def warp_label(

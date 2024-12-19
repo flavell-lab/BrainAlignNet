@@ -49,6 +49,9 @@ class FPImageWarper(EulerRegistrationProcessor):
         t_fixed_4 = t_fixed.zfill(4)
         # RFP images: /NRRD_filtered/*_ch2.nrrd
         # GFP images: /NRRD_cropped/*_ch1.nrrd
+        print(t_moving_4, t_fixed_4)
+        print(dataset_path)
+        print(glob.glob(f'{dataset_path}/NRRD_cropped/*_t{t_fixed_4}_ch1.nrrd'))
         fixed_image_path = glob.glob(
             f'{dataset_path}/NRRD_cropped/*_t{t_fixed_4}_ch1.nrrd')[0]
         moving_image_path = glob.glob(

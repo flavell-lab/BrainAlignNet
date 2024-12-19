@@ -54,32 +54,38 @@ def locate_dataset(dataset_name: str):
         FileNotFoundError: If the dataset cannot be found in any of the
             specified directories. """
 
-    swf360_path = "/data3/adam/SWF360_test_datasets"
-    if dataset_name == "2022-01-06-01":
+    swf360_path = "/scratch/nar8991/computer_vision/data/raw_data"
+    # swf360_path = "/scratch/nar8991/computer_vision/data/Atanas_processed"
+
+    if dataset_name == "2022-01-06-01": # This will need to be for all GFP
         return \
-        f"{swf360_path}/{dataset_name}-SWF360-animal1-610LP_newunet_output"
-    elif dataset_name == "2022-03-30-01":
+        f"{swf360_path}/{dataset_name}-SWF360_NRRD_cropped"
+        # f"{swf360_path}/{dataset_name}-SWF360-animal1-610LP_newunet_output"
+    elif dataset_name == "2022-01-17-01":
+        return f"{swf360_path}/{dataset_name}-SWF415-animal1_output"
+    elif dataset_name == "2023-07-28-04":
+        return \
+        f"{swf360_path}/{dataset_name}_output"
+    elif dataset_name == "2022-03-31-01":
         return f"{swf360_path}/{dataset_name}-SWF360-animal1-610LP_output"
     elif dataset_name == "2022-03-30-02":
         return \
         f"{swf360_path}/{dataset_name}-SWF360-animal2-610LP_diffnorm_ckpt287"
-    elif dataset_name == "2022-03-31-01":
-        return f"{swf360_path}/{dataset_name}-SWF360-animal1-610LP_output"
 
-    neuropal_dir = "/data1/prj_neuropal/data_processed"
-    kfc_dir = "/data1/prj_kfc/data_processed"
-    rim_dir = "/store1/prj_rim/data_processed"
+    # neuropal_dir = "/scratch/nar8991/computer_vision/data/raw_data"
+    # kfc_dir = "/scratch/nar8991/computer_vision/data/raw_data"
+    # rim_dir = "/scratch/nar8991/computer_vision/data/raw_data"
 
     dir_dataset_dict = {
-        neuropal_dir: os.listdir(neuropal_dir),
-        kfc_dir: os.listdir(kfc_dir),
-        rim_dir: os.listdir(rim_dir)
+        # neuropal_dir: os.listdir(neuropal_dir),
+        # kfc_dir: os.listdir(kfc_dir),
+        # rim_dir: os.listdir(rim_dir)
+        swf360_path: os.listdir(swf360_path)
     }
 
     for base_dir, dataset_dirs in dir_dataset_dict.items():
-
         if any(dataset_name in dataset_dir for dataset_dir in dataset_dirs):
-            dataset_path = glob.glob(f"{base_dir}/{dataset_name}_*")
+            dataset_path = glob.glob(f"{base_dir}/{dataset_name}*")
             assert len(dataset_path) == 1, \
                 f"More than one path for {dataset_name} found: {dataset_path}"
             return dataset_path[0]
